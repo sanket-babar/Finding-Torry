@@ -2,15 +2,24 @@ import discord
 import os
 from dotenv import load_dotenv
 load_dotenv()
-
-# instantiate discord client 
+ 
 client = discord.Client()
 
-# discord event to check when the bot is online 
+# bot online
 @client.event
 async def on_ready():
   print(f'{client.user} is now online!')
 
-# get bot token from .env and run client
-# has to be at the end of the file
+# ?torry command
+@client.event
+async def on_message(message): 
+  if message.author == client.user:
+      return  
+  
+  message_content = message.content.lower()  
+  
+  if message.content.startswith('?torry'):
+    await message.channel.send('Hello fellow scrooges! I\'m Torry. Please read my manual by typing ?help or ?commands while I\'m away.')
+
+# gets bot token
 client.run(os.getenv('TOKEN'))

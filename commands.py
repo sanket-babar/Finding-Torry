@@ -7,6 +7,7 @@ load_dotenv()
 client = discord.Client()
 
 @client.event
+
 async def on_message(message): 
   # make sure bot doesn't respond to it's own messages to avoid infinite loop
   if message.author == client.user:
