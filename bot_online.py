@@ -1,12 +1,7 @@
 import discord
 import os
- #import search_runpee # search class we will impelement later
-
-'''
-# If you are coding the bot on a local machine, use the python-dotenv pakcage to get variables stored in .env file of your project
 from dotenv import load_dotenv
 load_dotenv()
-'''
 
 # instantiate discord client 
 client = discord.Client()
@@ -18,4 +13,4 @@ async def on_ready():
 
 # get bot token from .env and run client
 # has to be at the end of the file
-client.run(os.getenv('token'))
+client.run(os.getenv('TOKEN'))
