@@ -1,7 +1,5 @@
 import discord
 import os
-from dotenv import load_dotenv
-load_dotenv()
 
 # instantiate discord client 
 client = discord.Client()

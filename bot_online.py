@@ -1,10 +1,15 @@
 import discord
 import os
+import search
+
 from dotenv import load_dotenv
 load_dotenv()
  
 client = discord.Client()
-
+search_web = search.Search()
+no_result_message = '''Sorry, we can\'t find what you are searching for. We may not have written anything about it yet, 
+but you can subscribe to our news letter for updates of our newest content 
+--> https://runpee.com/about-runpee/runpee-movie-newsletter/'''
 # bot online
 @client.event
 async def on_ready():
@@ -20,6 +25,17 @@ async def on_message(message):
   
   if message.content.startswith('?torry'):
     await message.channel.send('Hello fellow scrooges! I\'m Torry. Please read my manual by typing ?help or ?commands while I\'m away.')
+  if f'?search' in message_content:
+
+    key_words, search_words = search_web.key_words_search_words(message_content)
+    result_links = search_web.search(key_words)
+    links = search_web.send_link(result_links, search_words)
+    
+    if len(links) > 0:
+      for link in links:
+       await message.channel.send(link)
+    else:
+      await message.channel.send(no_result_message)  
 
 # gets bot token
 client.run(os.getenv('TOKEN'))
