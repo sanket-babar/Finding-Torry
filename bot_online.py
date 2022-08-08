@@ -7,9 +7,7 @@ load_dotenv()
  
 client = discord.Client()
 search_web = search.Search()
-no_result_message = '''Sorry, we can\'t find what you are searching for. We may not have written anything about it yet, 
-but you can subscribe to our news letter for updates of our newest content 
---> https://runpee.com/about-runpee/runpee-movie-newsletter/'''
+no_result_message = '''Sorry, we can\'t find what you are searching for. Are you sure you typed right?'''
 # bot online
 @client.event
 async def on_ready():

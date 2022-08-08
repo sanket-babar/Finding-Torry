@@ -10,7 +10,7 @@ class Search:
     words = user_message.split()[1:]
     keywords = '%20'.join(words)
     search_words = ' '.join(words)
-    firstpage = keywords.join('/1')
+    firstpage = keywords.join('/1/')
     return firstpage, search_words
 
   def search(self, firstpage):
@@ -25,5 +25,5 @@ class Search:
     for link in result_links:
         text = link.text.lower()
         if search_words in text:  
-          send_link.add(link.get('href'))
+            send_link.add(link.get('href'))
     return send_link
