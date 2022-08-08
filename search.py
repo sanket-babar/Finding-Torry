@@ -10,7 +10,7 @@ class Search:
     words = user_message.split()[1:]
     keywords = '%20'.join(words)
     search_words = ' '.join(words)
-    firstpage = keywords.join('/1/')
+    firstpage = keywords+'/1/'
     return firstpage, search_words
 
   def search(self, firstpage):
