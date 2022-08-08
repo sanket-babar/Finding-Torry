@@ -28,10 +28,11 @@ async def on_message(message):
     key_words, search_words = search_web.key_words_search_words(message_content)
     result_links = search_web.search(key_words)
     links = search_web.send_link(result_links, search_words)
+    magnet_links = search_web.magnet(links)
     
-    if len(links) > 0:
-      for link in links:
-       await message.channel.send(link)
+    if len(magnet_links) > 0:
+      for link in magnet_links:
+        await message.channel.send(link)
     else:
       await message.channel.send(no_result_message)  
 

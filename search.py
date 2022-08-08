@@ -25,5 +25,19 @@ class Search:
     for link in result_links:
         text = link.text.lower()
         if search_words in text:  
-            send_link.add(link.get('href'))
+            send_link.add('http://1337xx.to'+link.get('href'))
     return send_link
+
+  def magnet(self,send_link):
+    magnet_link = [] 
+    for indiv_link in send_link:
+      res = requests.get(indiv_link)
+      txt = res.text
+      status = res.status_code
+      soup1 = BeautifulSoup(txt, 'html.parser')
+      products = soup1.select('div.box-info > div')[1]
+      magnet_link.append(products.select('ul >li> a')[0].get('href')) 
+    return magnet_link
+
+
+
