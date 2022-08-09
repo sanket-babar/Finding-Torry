@@ -34,8 +34,9 @@ class Search:
     leechers = []
     title = []
     size = []
-    for indiv_link in send_link:
-      res = requests.get(indiv_link)
+    x = min(5,len(send_link))
+    for i in range(x) :
+      res = requests.get(send_link[i])
       txt = res.text
       status = res.status_code
       soup1 = BeautifulSoup(txt, 'html.parser')
