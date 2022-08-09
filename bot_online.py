@@ -44,21 +44,18 @@ async def on_message(message):
     result_links = search_web.search(key_words)
     links = search_web.send_link(result_links, search_words)
     magnet_links = search_web.magnet(links)
-    for link in magnet_links:
-      shorten_link = requests.get(f"http://mgnet.me/api/create?&format=json&opt=&m={link}&_=1595006240839",
-    headers = {
-              "accept": "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript, */*; q=0.01",
-              "accept-language": "en-US,en;q=0.9",
-              "x-requested-with": "XMLHttpRequest",
-              
-    }).json()["shorturl"]
-      embedVar = discord.Embed(title="Title", url=shorten_link, description="Desc", color=0x00ff00)
-      # embedVar.add_field(f"Movie title [Movie name]({link})")
-      await message.channel.send(embed=embedVar) 
-
     if len(magnet_links) > 0:
       for link in magnet_links:
-        await message.channel.send(link)
+        shorten_link = requests.get(f"http://mgnet.me/api/create?&format=json&opt=&m={link}&_=1595006240839",
+      headers = {
+                "accept": "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript, */*; q=0.01",
+                "accept-language": "en-US,en;q=0.9",
+                "x-requested-with": "XMLHttpRequest",
+                
+      }).json()["shorturl"]
+        embedVar = discord.Embed(title="Title", url=shorten_link, description="Desc", color=0x00ff00)
+        # embedVar.add_field(f"Movie title [Movie name]({link})")
+        await message.channel.send(embed=embedVar) 
     else:
       await message.channel.send(no_result_message)   
 
