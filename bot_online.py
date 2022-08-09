@@ -2,6 +2,7 @@ from apitest import shorten
 import discord
 import os
 import search
+import requests
 import json
 
 from dotenv import load_dotenv
@@ -25,18 +26,18 @@ async def on_message(message):
   
   if message.content.startswith('?torry'):
     await message.channel.send('Hello fellow scrooges! I\'m Torry. Please read my manual by typing ?help or ?commands while I\'m away.')
-  if f'?search' in message_content:
+  # if f'?search' in message_content:
 
-    key_words, search_words = search_web.key_words_search_words(message_content)
-    result_links = search_web.search(key_words)
-    links = search_web.send_link(result_links, search_words)
-    magnet_links = search_web.magnet(links)
+  #   key_words, search_words = search_web.key_words_search_words(message_content)
+  #   result_links = search_web.search(key_words)
+  #   links = search_web.send_link(result_links, search_words)
+  #   magnet_links = search_web.magnet(links)
     
-    if len(magnet_links) > 0:
-      for link in magnet_links:
-        await message.channel.send(link)
-    else:
-      await message.channel.send(no_result_message)
+  #   if len(magnet_links) > 0:
+  #     for link in magnet_links:
+  #       await message.channel.send(link)
+  #   else:
+  #     await message.channel.send(no_result_message)
 
   if f'?find' in message_content:
     key_words, search_words = search_web.key_words_search_words(message_content)
@@ -53,7 +54,13 @@ async def on_message(message):
     }).json()["shorturl"]
       embedVar = discord.Embed(title="Title", url=shorten_link, description="Desc", color=0x00ff00)
       # embedVar.add_field(f"Movie title [Movie name]({link})")
-      await message.channel.send(embed=embedVar)    
+      await message.channel.send(embed=embedVar) 
+
+    if len(magnet_links) > 0:
+      for link in magnet_links:
+        await message.channel.send(link)
+    else:
+      await message.channel.send(no_result_message)   
 
 # gets bot token
 client.run(os.getenv('TOKEN'))

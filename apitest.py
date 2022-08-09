@@ -11,4 +11,4 @@ def shorten():
               
     }).json()["shorturl"]
 
-print(shorten())
+# print(shorten())
