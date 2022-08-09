@@ -1,6 +1,8 @@
+from apitest import shorten
 import discord
 import os
 import search
+import json
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -42,7 +44,14 @@ async def on_message(message):
     links = search_web.send_link(result_links, search_words)
     magnet_links = search_web.magnet(links)
     for link in magnet_links:
-      embedVar = discord.Embed(title="Title", url='https://stackoverflow.com/questions/63160401/how-can-a-discord-bot-create-a-hyperlink-in-a-discord-message-in-an-embed-or-in', description="Desc", color=0x00ff00)
+      shorten_link = requests.get(f"http://mgnet.me/api/create?&format=json&opt=&m={link}&_=1595006240839",
+    headers = {
+              "accept": "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript, */*; q=0.01",
+              "accept-language": "en-US,en;q=0.9",
+              "x-requested-with": "XMLHttpRequest",
+              
+    }).json()["shorturl"]
+      embedVar = discord.Embed(title="Title", url=shorten_link, description="Desc", color=0x00ff00)
       # embedVar.add_field(f"Movie title [Movie name]({link})")
       await message.channel.send(embed=embedVar)    
 
