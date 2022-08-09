@@ -25,18 +25,6 @@ async def on_message(message):
   
   if message.content.startswith('?torry'):
     await message.channel.send('Hello fellow scrooges! I\'m Torry. Please read my manual by typing ?help or ?commands while I\'m away.')
-  # if f'?search' in message_content:
-
-  #   key_words, search_words = search_web.key_words_search_words(message_content)
-  #   result_links = search_web.search(key_words)
-  #   links = search_web.send_link(result_links, search_words)
-  #   magnet_links = search_web.magnet(links)
-    
-  #   if len(magnet_links) > 0:
-  #     for link in magnet_links:
-  #       await message.channel.send(link)
-  #   else:
-  #     await message.channel.send(no_result_message)
 
   if f'?find' in message_content:
     key_words, search_words = search_web.key_words_search_words(message_content)
@@ -53,10 +41,11 @@ async def on_message(message):
                 "x-requested-with": "XMLHttpRequest",
                 
       }).json()["shorturl"]
-        desc = f"📂 Size: {size[i]} || ⬆️ Seeders: {seeders[i]} || ⬇️ Leechers: {leechers[i]}"
-        embedVar = discord.Embed(title=title[i], url=shorten_link, description=desc, color=0xffffff)
+        desc = f"📂 Size: {size[i]} ▪️▪️ ⬆️ Seeders: {seeders[i]} ▪️▪️ ⬇️ Leechers: {leechers[i]}"
+        embedVar = discord.Embed(title=title[i], url=shorten_link, description=desc, color=0xff61f4)
         # embedVar.add_field(f"Movie title [Movie name]({link})")
         await message.channel.send(embed=embedVar) 
+      await message.channel.send("Didn't get what you searched for? Try being more specific")
     else:
       await message.channel.send(no_result_message)   
 
