@@ -1,4 +1,3 @@
-
 import discord
 import os
 import search
@@ -45,9 +44,8 @@ async def on_message(message):
     links = search_web.send_link(result_links, search_words)
     magnet_links,seeders,leechers,size,title = search_web.magnet(links)
   
-    x = len(magnet_links)
     if len(magnet_links) > 0:
-      for i in range(x):
+      for i in range(len(magnet_links)):
         shorten_link = requests.get(f"http://mgnet.me/api/create?&format=json&opt=&m={magnet_links[i]}&_=1595006240839",
       headers = {
                 "accept": "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript, */*; q=0.01",
@@ -55,7 +53,7 @@ async def on_message(message):
                 "x-requested-with": "XMLHttpRequest",
                 
       }).json()["shorturl"]
-        desc = f"size: {size[i]}\tseeders:{seeders[i]}\tleechers: {leechers[i]}"
+        desc = f"📂 Size: {size[i]} || ⬆️ Seeders: {seeders[i]} || ⬇️ Leechers: {leechers[i]}"
         embedVar = discord.Embed(title=title[i], url=shorten_link, description=desc, color=0xffffff)
         # embedVar.add_field(f"Movie title [Movie name]({link})")
         await message.channel.send(embed=embedVar) 
