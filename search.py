@@ -29,15 +29,31 @@ class Search:
     return send_link
 
   def magnet(self,send_link):
-    magnet_link = set()
+    magnet_link = []
+    seeders = []
+    leechers = []
+    title = []
+    size = []
     for indiv_link in send_link:
       res = requests.get(indiv_link)
       txt = res.text
       status = res.status_code
       soup1 = BeautifulSoup(txt, 'html.parser')
-      products = soup1.select('div.box-info > div')[1]
-      magnet_link.add(products.select('ul >li> a')[0].get('href')) 
-    return magnet_link
+      data = soup1.select('div.box-info > div')[1]
+      title_data = soup1.select('div.box-info > div > h1')[0].text
+      link = data.select('ul >li> a')[0].get('href')
+      li2 = data.select('ul.list')[0].select('li')[3]
+      li3 = data.select('ul.list')[1].select('li')[3]
+      li4 = data.select('ul.list')[1].select('li')[4]
+      size_data = li2.select('span')[0].text
+      seed = li3.select('span')[0].text
+      leech = li4.select('span')[0].text
+      magnet_link.append(link)
+      seeders.append(seed)
+      leechers.append(leech)
+      size.append(size_data)
+      title.append(title_data)
 
+    return magnet_link,seeders,leechers,size,title
 
 

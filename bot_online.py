@@ -1,4 +1,4 @@
-from apitest import shorten
+
 import discord
 import os
 import search
@@ -7,7 +7,7 @@ import json
 
 from dotenv import load_dotenv
 load_dotenv()
- 
+
 client = discord.Client()
 search_web = search.Search()
 no_result_message = '''Sorry, we can\'t find what you are searching for. Are you sure you typed right?'''
@@ -43,17 +43,20 @@ async def on_message(message):
     key_words, search_words = search_web.key_words_search_words(message_content)
     result_links = search_web.search(key_words)
     links = search_web.send_link(result_links, search_words)
-    magnet_links = search_web.magnet(links)
+    magnet_links,seeders,leechers,size,title = search_web.magnet(links)
+  
+    x = len(magnet_links)
     if len(magnet_links) > 0:
-      for link in magnet_links:
-        shorten_link = requests.get(f"http://mgnet.me/api/create?&format=json&opt=&m={link}&_=1595006240839",
+      for i in range(x):
+        shorten_link = requests.get(f"http://mgnet.me/api/create?&format=json&opt=&m={magnet_links[i]}&_=1595006240839",
       headers = {
                 "accept": "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript, */*; q=0.01",
                 "accept-language": "en-US,en;q=0.9",
                 "x-requested-with": "XMLHttpRequest",
                 
       }).json()["shorturl"]
-        embedVar = discord.Embed(title="Title", url=shorten_link, description="Desc", color=0x00ff00)
+        desc = f"size: {size[i]}\tseeders:{seeders[i]}\tleechers: {leechers[i]}"
+        embedVar = discord.Embed(title=title[i], url=shorten_link, description=desc, color=0xffffff)
         # embedVar.add_field(f"Movie title [Movie name]({link})")
         await message.channel.send(embed=embedVar) 
     else:
