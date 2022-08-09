@@ -35,6 +35,15 @@ async def on_message(message):
         await message.channel.send(link)
     else:
       await message.channel.send(no_result_message)  
+  if f'?find' in message_content:
+    key_words, search_words = search_web.key_words_search_words(message_content)
+    result_links = search_web.search(key_words)
+    links = search_web.send_link(result_links, search_words)
+    magnet_links = search_web.magnet(links)
+    for link in magnet_links:
+      embedVar = discord.Embed(title="Title", description="Desc", color=0x00ff00)
+      embedVar.add_field(f"Movie title [Movie name]({link})")
+      await message.channel.send(embed=embedVar)    
 
 # gets bot token
 client.run(os.getenv('TOKEN'))
