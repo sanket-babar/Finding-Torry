@@ -21,11 +21,11 @@ class Search:
     return result_links
       
   def send_link(self, result_links, search_words): 
-    send_link = set()
+    send_link = []
     for link in result_links:
         text = link.text.lower()
         if search_words in text:  
-            send_link.add('http://1337xx.to'+link.get('href'))
+            send_link.append('http://1337xx.to'+link.get('href'))
     return send_link
 
   def magnet(self,send_link):
