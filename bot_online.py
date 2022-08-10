@@ -24,9 +24,17 @@ async def on_message(message):
   message_content = message.content.lower()  
   
   if message.content.startswith('?torry'):
-    await message.channel.send('Hello fellow scrooges! I\'m Torry. Please read my manual by typing ?help or ?commands while I\'m away.')
+    await message.channel.send('Hello fellow scrooges! I\'m Torry. Please read my manual by typing ?t help or ?t commands while I\'m away.')
 
-  if f'?find' in message_content:
+  if (message.content.startswith('?t help') or message.content.startswith('?t commands')):
+    await message.channel.send('''Here are the list of commands Torry supports:
+    ?torry: Say hello to Torry
+    ?t find <search your torrent here> or ?t search <search your torrent here>: Searches your torrent and returns top 5 results
+    ?t help or ?t commands: To view commands
+    Note: Torry scrapes through hundreds of pages and might take a few seconds. Please be patient <3''')
+    
+
+  if (f'?t find' in message_content or f'?t search' in message_content):
     key_words, search_words = search_web.key_words_search_words(message_content)
     result_links = search_web.search(key_words)
     links = search_web.send_link(result_links, search_words)

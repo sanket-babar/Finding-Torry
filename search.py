@@ -7,7 +7,7 @@ class Search:
         self.url = 'https://www.1337xx.to/search/'
 
   def key_words_search_words(self, user_message):
-    words = user_message.split()[1:]
+    words = user_message.split()[2:]
     keywords = '%20'.join(words)
     search_words = ' '.join(words)
     firstpage = keywords+'/1/'
