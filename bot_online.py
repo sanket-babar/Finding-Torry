@@ -1,3 +1,4 @@
+
 import discord
 import os
 import search
@@ -15,6 +16,13 @@ no_result_message = '''Sorry, we can\'t find what you are searching for. Are you
 async def on_ready():
   print(f'{client.user} is now online!')
 
+@client.event
+async def on_guild_join(guild):
+    for channel in guild.text_channels:
+        if channel.permissions_for(guild.me).send_messages:
+            await channel.send('''Hey there! I\'m Torry, your personal pirate. Please type ?torry to greet me or ?t help to read and explore my commands.''')
+        break  
+
 # ?torry command
 @client.event
 async def on_message(message): 
@@ -29,7 +37,7 @@ async def on_message(message):
   if (message.content.startswith('?t help') or message.content.startswith('?t commands')):
     await message.channel.send('''Here are the list of commands Torry supports:
     ?torry: Say hello to Torry
-    ?t find <search your torrent here> or ?t search <search your torrent here>: Searches your torrent and returns top 5 results
+    ?t find <torrent-name> or ?t search <torrent-name>: Searches for your torrent and returns top 5 results
     ?t help or ?t commands: To view commands
     Note: Torry scrapes through hundreds of pages and might take a few seconds. Please be patient <3''')
     
